@@ -1,12 +1,14 @@
 Package: SIAModuleIRR2FPR
-Title: What the Package Does (One Line, Title Case)
+Title: Shiny Item Analysis Module for computing False Positive Rate from Inter-Rater Reliability
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Maintainer: František Bartoš <f.bartos96@gmail.com>
+Authors@R: c( 
+    person("František", "Bartoš",     role = c("aut", "cre"),
+    email = "f.bartos96@gmail.com", comment = c(ORCID = "0000-0002-0018-5573"))
+    )
+Description: Implements a Shiny Item Analysis module for computing False Positive Rate from Inter-Rater Reliability based on Bartoš & Martinková (2022) <doi:10.48550/arXiv.2207.09101>.
+License: GPL-3
+Encoding: UTF-8
 Config/ShinyItemAnalysis/module: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

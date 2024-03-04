@@ -6,7 +6,7 @@
 #' Interactive Module for Inter-Rater Reliability to False Positive Rate Conversion
 #'
 #' This module allows users to convert inter-rater reliability (IRR) to false positive rate (FPR)
-#' as described in Bartoš and Martinková (2023).
+#' as described in Bartoš and Martinková (2022).
 #'
 #' @author
 #' František Bartoš
@@ -72,18 +72,24 @@ sm_new_module_ui <- function(id, imports = NULL, ...) {
       "This module transforms the inter-rater reliability into the false-positive rate and
       other binary classification metrics. Details of the transformation are described in ",
       a(
-        "Baroš and Martinková (2023)",
+        "Baroš and Martinková (2022)",
         href = "http://doi.org/10.48550/arXiv.2207.09101",
         target = "_blank", .noWS = "after"
-      ), ". We use the NIH data set of Erosheva et al. (2021) for presentation."
+      ), ". We use the inter-rater reliability and the proportion of selected candidates
+      from NIH data set of ",
+      a(
+        "Erosheva et al. (2021)",
+        href = "http://doi.org/10.48550/arXiv.2207.09101",
+        target = "_blank", .noWS = "after"
+      ), " as default values."
     ),
     p(
-      "Below, you may select the IRR and the proportion of selected candidates in the selection procedure.
-      The left plot illustrates the variability in ratings for the whole dataset outshading the data which
-      would be lost due to range-restriction. The right plot provides the estimates
-      of the calculated inter-rater reliability estimates, defined by intraclass
-      corelation in the simplest model including the ratee effect only. The estimates
-      are accompanied by a bootstrapped 95% confidence interval based on 25 bootstrap samples.",
+      "Below, you may change the IRR and the proportion of selected candidates in the selection procedure.
+      The top right plot visualizes the true positive rate of the selection procedure (which also corresponds
+      to the F1 score). The bottom left plot visualizes the false positive rate, and the bottom right plot
+      visualizes the false negative rate of the selection procedure. The thin line visualizes the corresponding
+      metrics (y-axis) across the whole range of the proportion of selected candidates (x-axis), and the full point
+      highlights the given estimate for the currently specified proportion of selected candidates.",
       class = "mb-5"
     ),
 
@@ -92,36 +98,66 @@ sm_new_module_ui <- function(id, imports = NULL, ...) {
 
     fluidRow(
       column(
-        2,
+        12,
         sliderInput(
           inputId = ns("irr"),
-          label = "IRR",
-          min = 0,
-          max = 1,
-          step = 0.01,
-          value = 0.34,
+          label   = "IRR",
+          min     = 0,
+          max     = 1,
+          step    = 0.01,
+          value   = 0.34,
           animate = animationOptions(2000),
-          post = "", width = "100%"
+          post    = "",
+          width   = "45%"
         ),
         sliderInput(
           inputId = ns("proportion_selected"),
-          label = "Proportion",
-          min = 0,
-          max = 100,
-          step = 1,
-          value = 18,
+          label   = "Proportion Selected",
+          min     = 0,
+          max     = 100,
+          step    = 1,
+          value   = 18,
           animate = animationOptions(2000),
-          post = "%", width = "100%"
+          post    = "%",
+          width   = "45%"
         )
       )
-    )
-   # fluidRow(
-   #   column(6, plotlyOutput(ns("reliability_restricted_caterpillarplot"))),
-   #   column(6, plotlyOutput(ns("reliability_restricted_iccplot"))),
-   #   style = "padding-bottom: 20px;"
-   # ),
+    ),
 
+    plotOutput("FNRplot")
+#    fluidRow(
+#      column(6, plotOutput("FPRplot")),
+#      column(6, plotOutput("FNRplot")),
+#      style = "padding-bottom: 20px;"
+#    )
+#
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+   # sample R code -----------------------------------------------------------
+
+  #  h4("Selected R code"),
+  #  tags$pre(includeText(system.file("sc/restr_range.R", package = "SIAmodules")),
+  #           class = "language-r mb-4"
+  #  ),
+  #
+  #
+  #  # references --------------------------------------------------------
+  #  h4("References"),
+  #  HTML('<ul class = "biblio">
+  #             <li>Erosheva, E., Martinkova, P., & Lee, C. (2021).
+  #              When zero may not be zero: A cautionary note on the use of inter-rater
+  #              reliability in evaluating grant peer review. Journal of the Royal Statistical Society - Series A,
+  #              184(3), 904-919.
+  #             <a href = "https://doi.org/10.1111/rssa.12681", target = "_blank">doi:10.1111/rssa.12681</a>
+  #             </li>
+  #
+  #             <li>Martinkova, P., & Drabinova, A. (2018).
+  #             ShinyItemAnalysis for teaching psychometrics and to enforce routine analysis of educational tests.
+  #             The R Journal, 10(2), 503-515.
+  #             <a href = "https://doi.org/10.32614/RJ-2018-074", target = "_blank">doi:10.32614/RJ-2018-074</a>
+  #             </li>
+  #           </ul>')
+  #
   )
 }
 
@@ -134,8 +170,30 @@ sm_new_module_server <- function(id, imports = NULL, ...) {
     ns <- session$ns
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # YOUR CODE FOR THE SERVER LOGIC GOES HERE
-    # Please edit only the part inside the dashed lines.
+    output$FPRplot <- renderPlot({
+      input$IRR
+      input$proportion_selected
+      par(mar=c(4,4,0.1, 0.1))
+      plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False positive rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
+      x_seq <- seq(0, 1, 0.01)
+
+      lines(x_seq, compute_false_positive_rate(IRR = input$IRR, proportion_selected = x_seq), lwd = 1)
+      points(x_seq, compute_false_positive_rate(IRR = input$IRR, proportion_selected = input$proportion_selected), lwd = 1)
+
+    })
+
+    output$FNRplot <- renderPlot({
+      input$IRR
+      input$proportion_selected
+      par(mar=c(4,4,0.1, 0.1))
+      plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False negative rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
+      x_seq <- seq(0, 1, 0.01)
+
+      lines(x_seq, compute_false_negative_rate(IRR = input$IRR, proportion_selected = x_seq), lwd = 1)
+      points(x_seq, compute_false_negative_rate(IRR = input$IRR, proportion_selected = input$proportion_selected), lwd = 1)
+
+    })
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   })

@@ -10,6 +10,6 @@ Description: Implements a Shiny Item Analysis module for computing False Positiv
 License: GPL-3
 Encoding: UTF-8
 Config/ShinyItemAnalysis/module: true
-Encoding: UTF-8
+Imports: ggplot2, plotly, shiny, ShinyItemAnalysis, shinyjs, mvtnorm
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

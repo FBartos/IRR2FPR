@@ -28,7 +28,7 @@ compute_proportion_of_correctly_selected <- function(IRR, proportion_selected){
 
 compute_proportion_of_correctly_selected.fun <- function(IRR, proportion_selected){
   pC <- mvtnorm::pmvnorm(
-    lower = c(qnorm(proportion_selected, 0, sqrt(IRR)), qnorm(proportion_selected, 0, 1) ),
+    lower = c(stats::qnorm(proportion_selected, 0, sqrt(IRR)), stats::qnorm(proportion_selected, 0, 1) ),
     upper = c(Inf, Inf),
     sigma = matrix(c(
       IRR,

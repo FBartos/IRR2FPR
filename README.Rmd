@@ -15,14 +15,12 @@ knitr::opts_chunk$set(
 
 # SIAModuleIRR2FPR
 
-<!-- badges: start -->
-<!-- badges: end -->
+This package implements a Shiny Item Analysis module for computing binary classification metrics from inter-rater reliability based on Bartoš & Martinková (2022).
 
-The goal of SIAModuleIRR2FPR is to ...
 
 ## Installation
 
-You can install the development version of SIAModuleIRR2FPR like so:
+You can install the development version of `SIAModuleIRR2FPR` like so:
 
 ``` r
 devtools::install_github("FBartos/SIAModuleIRR2FPR")
@@ -30,31 +28,56 @@ devtools::install_github("FBartos/SIAModuleIRR2FPR")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The module can be used interactively via the Shiny Item Analysis:
 
-```{r example}
+
+```r
+library(ShinyItemAnalysis)
 library(SIAModuleIRR2FPR)
-## basic example code
+run_app()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
+Furthermore, the functions can be also accessed directly from R. 
+For example, we use the results reported in Erosheva et. al (2021) to compute the binary classification metrics:
 ```{r}
-# compute IRR based on Erosheva et. al (2021)
-IRR <- spearman_brown_formula(0.34, 2.79)
+library(SIAModuleIRR2FPR)
+# use results based on Erosheva et. al (2021)
+IRR      <- spearman_brown_formula(0.34, 2.79)
+prop_sel <- 0.18
 
 # compute the binary classification metrics
-compute_true_positive_rate(IRR, 0.18)
-compute_false_positive_rate(IRR, 0.18)
-compute_false_negative_rate(IRR, 0.18)
+compute_true_positive_rate(IRR, prop_sel)
+compute_false_positive_rate(IRR, prop_sel)
+compute_false_negative_rate(IRR, prop_sel)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+and visualize the metrics across the range of possible proportions of selected candidates.
+```{r, echo = TRUE}
+par(mar=c(4,4,0.1, 0.1))
+plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "True positive rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
+x_seq <- seq(0, 1, 0.01)
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+lines(x_seq, compute_true_positive_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
+points(prop_sel, compute_true_positive_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+```{r, echo = TRUE}
+par(mar=c(4,4,0.1, 0.1))
+plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False positive rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
+x_seq <- seq(0, 1, 0.01)
+
+lines(x_seq, compute_false_positive_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
+points(prop_sel, compute_false_positive_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
+```
+
+```{r, echo = TRUE}
+par(mar=c(4,4,0.1, 0.1))
+plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False negative rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
+x_seq <- seq(0, 1, 0.01)
+
+lines(x_seq, compute_false_negative_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
+points(prop_sel, compute_false_negative_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
+```
+
+## References
+Bartoš, F., & Martinková, P. (2022). Selecting applicants based on multiple ratings: Using binary classification framework as an alternative to inter-rater reliability. (https://arxiv.org/abs/2207.09101v2)

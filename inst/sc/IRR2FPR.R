@@ -1,88 +1,34 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# SIAModuleIRR2FPR
-
-This package implements a Shiny Item Analysis module for computing
-binary classification metrics from inter-rater reliability based on
-Bartoš & Martinková (2022).
-
-## Installation
-
-You can install the development version of `SIAModuleIRR2FPR` like so:
-
-``` r
-devtools::install_github("FBartos/SIAModuleIRR2FPR")
-```
-
-## Example
-
-The module can be used interactively via the Shiny Item Analysis:
-
-``` r
-library(ShinyItemAnalysis)
 library(SIAModuleIRR2FPR)
-run_app()
-```
 
-Furthermore, the functions can be also accessed directly from R. For
-example, we use the results reported in Erosheva et. al (2021) to
-compute the binary classification metrics:
-
-``` r
-library(SIAModuleIRR2FPR)
 # use results based on Erosheva et. al (2021)
 IRR      <- spearman_brown_formula(0.34, 2.79)
 prop_sel <- 0.18
 
 # compute the binary classification metrics
 compute_true_positive_rate(IRR, prop_sel)
-#> [1] 0.6027441
 compute_false_positive_rate(IRR, prop_sel)
-#> [1] 0.3972559
 compute_false_negative_rate(IRR, prop_sel)
-#> [1] 0.08720251
-```
 
-and visualize the metrics across the range of possible proportions of
-selected candidates.
-
-``` r
+# visualize the metrics across the range of the proportion of selected candidates
 par(mar=c(4,4,0.1, 0.1))
 plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "True positive rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
 x_seq <- seq(0, 1, 0.01)
 
 lines(x_seq, compute_true_positive_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
 points(prop_sel, compute_true_positive_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
-```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-``` r
 par(mar=c(4,4,0.1, 0.1))
 plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False positive rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
 x_seq <- seq(0, 1, 0.01)
 
 lines(x_seq, compute_false_positive_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
 points(prop_sel, compute_false_positive_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
-```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-``` r
 par(mar=c(4,4,0.1, 0.1))
 plot(NA, type = "n", axes = TRUE, bty = "n", xlab = "Proportion selected", ylab = "False negative rate", xlim = c(0, 1), ylim = c(0, 1), las = 1)
 x_seq <- seq(0, 1, 0.01)
 
 lines(x_seq, compute_false_negative_rate(IRR = IRR, proportion_selected = x_seq), lwd = 2)
 points(prop_sel, compute_false_negative_rate(IRR = IRR, proportion_selected = prop_sel), pch = 16, cex = 1.5)
-```
-
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
-
-## References
-
-Bartoš, F., & Martinková, P. (2022). Selecting applicants based on
-multiple ratings: Using binary classification framework as an
-alternative to inter-rater reliability.
-(<https://arxiv.org/abs/2207.09101v2>)

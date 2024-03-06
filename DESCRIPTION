@@ -1,15 +1,15 @@
 Package: SIAModuleIRR2FPR
 Title: Shiny Item Analysis Module for computing False Positive Rate from Inter-Rater Reliability
-Version: 0.0.0.9000
+Version: 0.1
 Maintainer: František Bartoš <f.bartos96@gmail.com>
 Authors@R: c( 
     person("František", "Bartoš",     role = c("aut", "cre"),
     email = "f.bartos96@gmail.com", comment = c(ORCID = "0000-0002-0018-5573"))
     )
-Description: Implements a Shiny Item Analysis module for computing False Positive Rate from Inter-Rater Reliability based on Bartoš & Martinková (2022) <doi:10.48550/arXiv.2207.09101>.
+Description: Implements a Shiny Item Analysis module for computing false positive rate and other binary classification metrics from inter-rater reliability based on Bartoš & Martinková (2022) <doi:10.48550/arXiv.2207.09101>.
 License: GPL-3
 Encoding: UTF-8
 Config/ShinyItemAnalysis/module: true
-Imports: ggplot2, plotly, shiny, ShinyItemAnalysis, shinyjs, mvtnorm
+Imports: shiny, mvtnorm
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

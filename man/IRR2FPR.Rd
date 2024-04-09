@@ -14,4 +14,4 @@ Using binary classification framework as an alternative to inter-rater reliabili
 \author{
 František Bartoš
 }
-\concept{SIAmodules}
+\concept{SIAmodules package}

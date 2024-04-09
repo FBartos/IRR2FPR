@@ -18,3 +18,6 @@ The inter-rater reliability
 Compute the inter-rater reliability
 based on the Spearman-Brown formula
 }
+\examples{
+spearman_brown_formula(0.5, 3)
+}

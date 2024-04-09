@@ -2,13 +2,13 @@
 % Please edit documentation in R/sm_IRR2FPR.R
 \name{IRR2FPR_internal}
 \alias{IRR2FPR_internal}
-\alias{sm_new_module_ui}
-\alias{sm_new_module_server}
+\alias{IRR2FPR_ui}
+\alias{IRR2FPR_server}
 \title{\code{IRR2FPR} module (internal documentation)}
 \usage{
-sm_new_module_ui(id, imports = NULL, ...)
+IRR2FPR_ui(id, imports = NULL, ...)
 
-sm_new_module_server(id, imports = NULL, ...)
+IRR2FPR_server(id, imports = NULL, ...)
 }
 \arguments{
 \item{id}{\emph{character}, the ID assigned by ShinyItemAnalysis. \strong{Do not set any

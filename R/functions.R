@@ -6,6 +6,7 @@
 #' @param proportion_selected The proportion of selected candidates
 #'
 #' @return The proportion of correctly selected candidates
+#' @examples compute_proportion_of_correctly_selected(0.75, 0.10)
 #' @export
 compute_proportion_of_correctly_selected <- function(IRR, proportion_selected){
 
@@ -48,6 +49,7 @@ compute_proportion_of_correctly_selected.fun <- function(IRR, proportion_selecte
 #' @param proportion_selected The proportion of selected candidates
 #'
 #' @return The true positive rate
+#' @examples compute_true_positive_rate(0.75, 0.10)
 #' @export
 compute_true_positive_rate <- function(IRR, proportion_selected){
 
@@ -62,6 +64,7 @@ compute_true_positive_rate <- function(IRR, proportion_selected){
 #' @param proportion_selected The proportion of selected candidates
 #'
 #' @return The false positive rate
+#' @examples compute_false_positive_rate(0.75, 0.10)
 #' @export
 compute_false_positive_rate <- function(IRR, proportion_selected){
 
@@ -76,6 +79,7 @@ compute_false_positive_rate <- function(IRR, proportion_selected){
 #' @param proportion_selected The proportion of selected candidates
 #'
 #' @return The false negative rate
+#' @examples compute_false_negative_rate(0.75, 0.10)
 #' @export
 compute_false_negative_rate <- function(IRR, proportion_selected){
 
@@ -90,6 +94,7 @@ compute_false_negative_rate <- function(IRR, proportion_selected){
 #' @param n_raters The number of raters
 #'
 #' @return The inter-rater reliability
+#' @examples spearman_brown_formula(0.5, 3)
 #' @export
 spearman_brown_formula <- function(IRR_1, n_raters){
   return(n_raters * IRR_1 / (1 + (n_raters - 1) * IRR_1))

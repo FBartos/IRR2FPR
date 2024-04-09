@@ -1,4 +1,4 @@
-library(SIAModuleIRR2FPR)
+library(IRR2FPR)
 
 # use results based on Erosheva et. al (2021)
 IRR      <- spearman_brown_formula(0.34, 2.79)

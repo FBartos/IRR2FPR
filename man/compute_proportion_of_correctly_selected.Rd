@@ -19,3 +19,6 @@ Compute proportion of correctly selected candidates
 based on the inter-rater reliability and the
 proportion of selected candidates
 }
+\examples{
+compute_proportion_of_correctly_selected(0.75, 0.10)
+}

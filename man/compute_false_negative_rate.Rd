@@ -19,3 +19,6 @@ Compute the false negative rate
 based on the inter-rater reliability and the
 proportion of selected candidates
 }
+\examples{
+compute_false_negative_rate(0.75, 0.10)
+}

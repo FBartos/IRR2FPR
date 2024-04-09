@@ -1,6 +1,6 @@
-sm_new_module:
+IRR2FPR:
   title: IRR to False Positive Rate
   category: Reliability
   binding:
-    ui: sm_new_module_ui
-    server: sm_new_module_server
+    ui: IRR2FPR_ui
+    server: IRR2FPR_server

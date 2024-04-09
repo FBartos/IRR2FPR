@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# SIAModuleIRR2FPR
+# IRR2FPR
 
 This package implements a Shiny Item Analysis module for computing
 binary classification metrics from inter-rater reliability based on
@@ -9,10 +9,10 @@ Bartoš & Martinková (2022).
 
 ## Installation
 
-You can install the development version of `SIAModuleIRR2FPR` like so:
+You can install the development version of `IRR2FPR` like so:
 
 ``` r
-devtools::install_github("FBartos/SIAModuleIRR2FPR")
+devtools::install_github("FBartos/IRR2FPR")
 ```
 
 ## Example
@@ -21,7 +21,7 @@ The module can be used interactively via the Shiny Item Analysis:
 
 ``` r
 library(ShinyItemAnalysis)
-library(SIAModuleIRR2FPR)
+library(IRR2FPR)
 run_app()
 ```
 
@@ -30,7 +30,7 @@ example, we use the results reported in Erosheva et. al (2021) to
 compute the binary classification metrics:
 
 ``` r
-library(SIAModuleIRR2FPR)
+library(IRR2FPR)
 # use results based on Erosheva et. al (2021)
 IRR      <- spearman_brown_formula(0.34, 2.79)
 prop_sel <- 0.18

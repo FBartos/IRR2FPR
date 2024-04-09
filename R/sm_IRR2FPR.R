@@ -12,7 +12,7 @@
 #' František Bartoš
 #'
 #' @name IRR2FPR
-#' @family SIAmodules
+#' @family SIAmodules package
 #'
 #' @references Bartoš, F., & Martinková, P. (2022). Selecting applicants based on multiple ratings:
 #' Using binary classification framework as an alternative to inter-rater reliability. \doi{10.48550/arXiv.2207.09101}
@@ -59,7 +59,7 @@ NULL
 NULL
 
 #' @rdname IRR2FPR_internal
-sm_new_module_ui <- function(id, imports = NULL, ...) {
+IRR2FPR_ui <- function(id, imports = NULL, ...) {
   ns <- NS(id) # shorthand for NS(id, <inputId>)
   # Any `inputId` and `outputId` of {shiny} UI elements MUST be "wrapped" in `ns()` call!
 
@@ -139,7 +139,7 @@ sm_new_module_ui <- function(id, imports = NULL, ...) {
    # sample R code -----------------------------------------------------------
 
    h4("Selected R code"),
-   tags$pre(includeText(system.file("sc/IRR2FPR.R", package = "SIAModuleIRR2FPR")),
+   tags$pre(includeText(system.file("sc/IRR2FPR.R", package = "IRR2FPR")),
             class = "language-r mb-4"
    ),
 
@@ -167,7 +167,7 @@ sm_new_module_ui <- function(id, imports = NULL, ...) {
 ## Server part ------------------------------------------------------------
 
 #' @rdname IRR2FPR_internal
-sm_new_module_server <- function(id, imports = NULL, ...) {
+IRR2FPR_server <- function(id, imports = NULL, ...) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
